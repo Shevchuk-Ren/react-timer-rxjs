@@ -29,7 +29,9 @@ const Timer = ({ sec, min, hours }) => {
 };
 
 Timer.propTypes = {
-  time: PropTypes.number.isRequired,
+  hours: PropTypes.string.isRequired,
+  min: PropTypes.string.isRequired,
+  sec: PropTypes.string.isRequired,
 };
 
 export default Timer;

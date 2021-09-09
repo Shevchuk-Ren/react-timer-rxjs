@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { Observable } from 'rxjs';
+import { useState, useEffect } from 'react';
 import { interval, startWith, scan } from 'rxjs';
-import { timer } from 'rxjs';
 import Container from '../Container';
 import Timer from '../Timer';
 import Buttons from '../Buttons';
@@ -12,27 +10,24 @@ function App() {
   const [timerOn, setTimerOn] = useState(false);
   const [counter, setCounter] = useState(0);
 
-  const seconds = interval(10).pipe(
+  const milliseconds = interval(10).pipe(
     startWith(time),
     scan(time => time + 1),
   );
 
   useEffect(() => {
     if (timerOn) {
-      const sec = seconds.subscribe(setTime);
-      return () => sec.unsubscribe();
+      const startCounter = milliseconds.subscribe(setTime);
+      return () => startCounter.unsubscribe();
     }
-  }, [timerOn, seconds]);
+  }, [timerOn, milliseconds]);
 
   const start = () => {
-    // console.log(time);
-    seconds.subscribe(setTimerOn(true));
-    // setTimerOn(true);
-    // console.log(timerOn);
+    milliseconds.subscribe(setTimerOn(true));
   };
 
   const stop = () => {
-    seconds.subscribe(setTimerOn(false));
+    milliseconds.subscribe(setTimerOn(false));
     setTime(0);
   };
 
@@ -43,19 +38,17 @@ function App() {
       setCounter(0);
     }, 300);
     if (counter === 1) {
-      seconds.subscribe(setTimerOn(false));
+      milliseconds.subscribe(setTimerOn(false));
       setTime(time);
     }
   };
 
   const reset = () => {
-    // setTime(prevTime => prevTime);
-
-    seconds.subscribe(setTimerOn(false));
+    milliseconds.subscribe(setTimerOn(false));
     setTime(0);
 
     setTimeout(() => {
-      seconds.subscribe(setTimerOn(true));
+      milliseconds.subscribe(setTimerOn(true));
     }, 300);
   };
 

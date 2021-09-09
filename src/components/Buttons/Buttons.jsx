@@ -11,7 +11,7 @@ const Buttons = ({ status, onStart, onStop, onReset, onWait }) => {
   return (
     <ul>
       {!status ? (
-        <li key="0">
+        <li key={startId}>
           <button type="button" onClick={onStart}>
             Start
           </button>
