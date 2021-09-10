@@ -53,7 +53,7 @@ function App() {
   };
 
   let hours = ('0' + Math.floor((time / 3.6e6) % 24)).slice(-2);
-  let min = ('0' + Math.floor((time / 1000) % 60)).slice(-2);
+  let min = ('0' + Math.floor((time / 6000) % 60)).slice(-2);
   let sec = ('0' + Math.floor((time / 100) % 60)).slice(-2);
 
   return (
